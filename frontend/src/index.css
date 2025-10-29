@@ -1,0 +1,91 @@
+/* Self-Hosted Raleway (Extract TTF to /public/fonts/) */
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/Raleway-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Global Sans-Serif Lock */
+* {
+  font-family: 'Raleway', sans-serif !important;
+}
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif !important;
+  background-color: #121212;
+  color: white;
+  line-height: 1.6;
+}
+
+/* Hero Section */
+.hero-bg {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+              url('https://source.unsplash.com/random/1920x1080/?kitchen,dark');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  margin-bottom: 2rem;
+}
+
+/* Card Hover */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(76, 175, 80, 0.2) !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero-image {
+    max-width: 400px;
+  }
+  
+  h1 {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* Toastify Dark */
+.Toastify__toast--dark {
+  background-color: #1e1e1e !important;
+  color: white;
+}
+
+/* Buttons */
+button, .MuiButton-root {
+  font-family: 'Raleway', sans-serif !important;
+  text-transform: none !important;
+}
