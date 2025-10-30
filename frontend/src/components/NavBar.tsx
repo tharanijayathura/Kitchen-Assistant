@@ -2,6 +2,7 @@ import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, Lis
 import { Link, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import logo from '../assets/logo.jpg'; // ✅ Import your logo image
 
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -19,7 +20,7 @@ const NavBar = () => {
   ];
 
   const drawer = (
-    <Box sx={{ textAlign: 'center', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', height: '100%' }}>
+    <Box sx={{ textAlign: 'center', background: 'linear-gradient(135deg, #81C784 0%, #2E7D32 100%)', height: '100%' }}>
       <Typography variant="h6" sx={{ my: 2, color: 'white', fontWeight: 700 }}>
         Kitchen Assistant
       </Typography>
@@ -38,6 +39,7 @@ const NavBar = () => {
               borderRadius: 1,
               '&:hover': {
                 backgroundColor: 'rgba(255,255,255,0.1)',
+                transform: 'scale(1.02)',
               }
             }}
           >
@@ -52,9 +54,10 @@ const NavBar = () => {
             onClick={handleDrawerToggle}
             sx={{ 
               backgroundColor: 'white',
-              color: '#667eea',
+              color: '#4CAF50',
               '&:hover': {
-                backgroundColor: '#f5f5f5',
+                backgroundColor: '#F1F8E9',
+                color: '#2E7D32',
               }
             }}
           >
@@ -70,27 +73,47 @@ const NavBar = () => {
       <AppBar 
         position="absolute" 
         sx={{ 
-            backgroundColor: 'rgba(0, 0, 0, 0.8)', // Change this line
-            boxShadow: 'none',
-            py: 1
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          boxShadow: 'none',
+          py: 1
         }}
       >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          {/* Logo */}
-            <Typography 
-            variant="h6" 
+          
+          {/* ✅ Logo + Title */}
+          <Box 
             component={Link} 
             to="/" 
             sx={{ 
-                textDecoration: 'none', 
+              display: 'flex', 
+              alignItems: 'center', 
+              textDecoration: 'none' 
+            }}
+          >
+            <Box
+              component="img"
+              src={logo}
+              alt="Logo"
+              sx={{
+                width: 40,
+                height: 40,
+                mr: 1.5,
+                borderRadius: '50%', // remove if you want square logo
+                objectFit: 'cover',
+              }}
+            />
+            <Typography 
+              variant="h6" 
+              sx={{ 
                 color: 'white',
                 fontWeight: 700,
                 fontSize: '1.5rem',
                 fontFamily: '"Raleway", sans-serif',
-            }}
+              }}
             >
-            Kitchen Assistant
+              Kitchen Assistant
             </Typography>
+          </Box>
 
           {/* Desktop Menu */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
@@ -137,12 +160,13 @@ const NavBar = () => {
                 px: 3,
                 py: 1,
                 backgroundColor: 'white',
-                color: '#667eea',
+                color: '#4CAF50',
                 fontWeight: 600,
                 borderRadius: 2,
                 boxShadow: '0 4px 15px rgba(255,255,255,0.2)',
                 '&:hover': {
-                  backgroundColor: '#f5f5f5',
+                  backgroundColor: '#F1F8E9',
+                  color: '#2E7D32',
                   transform: 'translateY(-2px)',
                   boxShadow: '0 6px 20px rgba(255,255,255,0.3)',
                 },
@@ -153,7 +177,7 @@ const NavBar = () => {
             </Button>
           </Box>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -166,7 +190,7 @@ const NavBar = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Mobile drawer */}
+      {/* Mobile Drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
@@ -179,7 +203,7 @@ const NavBar = () => {
           '& .MuiDrawer-paper': { 
             boxSizing: 'border-box', 
             width: 240,
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #81C784 0%, #2E7D32 100%)',
           },
         }}
       >

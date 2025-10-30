@@ -55,7 +55,19 @@ const Home = () => {
     }
   };
 
-  const floatingImages = [
+  type FloatingImage = {
+    src: string;
+    alt: string;
+    top?: string;
+    left?: string;
+    right?: string;
+    bottom?: string;
+    speed: number;
+    width: number;
+    height: number;
+  };
+
+  const heroImages: FloatingImage[] = [
     {
       src: appleImage,
       alt: "Avacado",
@@ -66,7 +78,7 @@ const Home = () => {
       height: 240
     },
     {
-      src: tomatoImage, 
+      src: tomatoImage,
       alt: "Fresh Tomato",
       top: "15%",
       right: "8%",
@@ -91,33 +103,63 @@ const Home = () => {
       speed: 0.2,
       width: 120,
       height: 90
-    },
+    }
+  ];
+
+  const featuresImages: FloatingImage[] = [
     {
       src: manImage,
       alt: "Man Icon in Center",
-      top: "50%",
-      left: "40%",
-      speed: 0.4,
+      top: "10%",
+      left: "10%",
+      speed: 0.3,
       width: 130,
       height: 130
     },
     {
       src: tomatoImage,
       alt: "Tomato in Center",
-      top: "65%",
-      left: "55%",
-      speed: 0.2,
-      width: 250,
-      height: 250
+      top: "15%",
+      right: "15%",
+      speed: 0.4,
+      width: 180,
+      height: 180
     },
     {
       src: manImage,
       alt: "Eggs in Center",
-      top: "10%",
-      left: "30%",
-      speed: 0.5,
+      top: "60%",
+      left: "5%",
+      speed: 0.2,
       width: 100,
       height: 120
+    },
+    {
+      src: appleImage,
+      alt: "Avocado Bottom",
+      top: "70%",
+      right: "8%",
+      speed: 0.3,
+      width: 200,
+      height: 220
+    },
+    {
+      src: tomatoImage,
+      alt: "Tomato Middle",
+      top: "40%",
+      left: "70%",
+      speed: 0.5,
+      width: 140,
+      height: 140
+    },
+    {
+      src: manImage,
+      alt: "Man Bottom Center",
+      top: "80%",
+      left: "45%",
+      speed: 0.4,
+      width: 110,
+      height: 110
     }
   ];
 
@@ -150,8 +192,6 @@ const Home = () => {
 
   return (
     <>
-      {/* REMOVED THE DUPLICATE FLOATING IMAGES SECTION HERE */}
-
       {/* Hero Section */}
       <Box 
         sx={{ 
@@ -186,24 +226,24 @@ const Home = () => {
           }}
         />
 
-        {/* Floating Food Images - Real PNGs (ONLY THIS SET REMAINS) */}
-        {floatingImages.map((image, index) => (
+        {/* Hero Section Floating Images */}
+        {heroImages.map((image, index) => (
           <Box
-            key={index}
+            key={`hero-${index}`}
             sx={{
-              position: 'absolute', // Changed from fixed to absolute
+              position: 'absolute',
               top: image.top,
               left: image.left,
               right: image.right,
               bottom: image.bottom,
               width: image.width,
               height: image.height,
-              zIndex: 2, // This should now be behind the content
+              zIndex: 2,
               opacity: isScrolling ? 0.8 : 0.6,
               transform: `translateY(${isScrolling ? scrollY * image.speed : 0}px)`,
               transition: 'all 0.3s ease-out',
               filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3))',
-              pointerEvents: 'none', // Add this to prevent interaction
+              pointerEvents: 'none',
               '&:hover': {
                 opacity: 0.9,
                 transform: `translateY(${isScrolling ? scrollY * image.speed : 0}px) scale(1.1)`,
@@ -289,192 +329,231 @@ const Home = () => {
         </Container>
       </Box>
 
-      {/* Features Section */}
-      <Container 
-        maxWidth="lg" 
-        sx={{ 
-          py: 12, 
-          backgroundColor: 'background.paper',
-          position: 'relative',
-          zIndex: 3
-        }}
-      >
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', gap: 6 }}>
-         
-          {/* Video Section */}
-          <Box sx={{ flex: 1, textAlign: 'center' }}>
-            <Box
-              component="video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              sx={{
+      {/* Features Section with Floating Images */}
+      <Box sx={{ position: 'relative', backgroundColor: 'background.paper', overflow: 'hidden' }}>
+        {featuresImages.map((image, index) => (
+          <Box
+            key={`features-${index}`}
+            sx={{
+              position: 'absolute',
+              top: image.top,
+              left: image.left,
+              right: image.right,
+              bottom: image.bottom,
+              width: image.width,
+              height: image.height,
+              zIndex: 3,
+              opacity: isScrolling ? 0.6 : 0.4,
+              transform: `translateY(${isScrolling ? scrollY * image.speed : 0}px)`,
+              transition: 'all 0.3s ease-out',
+              filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.2))',
+              pointerEvents: 'none',
+              '&:hover': {
+                opacity: 0.6,
+                transform: `translateY(${isScrolling ? scrollY * image.speed : 0}px) scale(1.05)`,
+              }
+            }}
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              style={{
                 width: '100%',
-                maxWidth: 500,
-                height: 'auto',
-                borderRadius: 3,
-                boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                height: '100%',
+                objectFit: 'contain',
               }}
-            >
-              <source src="src/assets/g video.mp4" type="video/mp4" />
-              <source src="/path/to/your/video.webm" type="video/webm" />
-              Your browser does not support the video tag.
+            />
+          </Box>
+        ))}
+
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            py: 12, 
+            position: 'relative',
+            zIndex: 2
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', gap: 6 }}>
+           
+            {/* Video Section */}
+            <Box sx={{ flex: 1, textAlign: 'center', position: 'relative', zIndex: 2 }}>
+              <Box
+                component="video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                sx={{
+                  width: '100%',
+                  maxWidth: 500,
+                  height: 'auto',
+                  borderRadius: 3,
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                }}
+              >
+                <source src="src/assets/g video.mp4" type="video/mp4" />
+                <source src="/path/to/your/video.webm" type="video/webm" />
+                Your browser does not support the video tag.
+              </Box>
+            </Box>
+
+            {/* Features Content */}
+            <Box sx={{ flex: 1, position: 'relative', zIndex: 2 }}>
+              <Typography
+                variant="h2"
+                component="h2"
+                gutterBottom
+                sx={{ 
+                  color: 'text.primary', 
+                  mb: 2,
+                  fontWeight: 700,
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                }}
+                style={{ fontFamily: '"Raleway", sans-serif' }}
+              >
+                Your Kitchen, Smarter
+              </Typography>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 3,
+                }}
+              >
+                {features.map((feature, index) => (
+                  <Card 
+                    key={index}
+                    sx={{ 
+                      bgcolor: 'background.default',
+                      borderRadius: 3,
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                      border: `1px solid ${theme.palette.divider}`,
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      zIndex: 2,
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+                      }
+                    }}
+                  >
+                    <CardContent sx={{ py: 3, px: 3 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                        <Box
+                          sx={{
+                            display: 'inline-flex',
+                            p: 2,
+                            borderRadius: 3,
+                            bgcolor: `${feature.color}15`,
+                            color: feature.color,
+                            transition: 'all 0.3s ease'
+                          }}
+                        >
+                          {feature.icon}
+                        </Box>
+                        <Box sx={{ flex: 1 }}>
+                          <Typography 
+                            gutterBottom 
+                            variant="h5" 
+                            component="h3" 
+                            sx={{ 
+                              color: 'text.primary',
+                              fontWeight: 600,
+                              mb: 1
+                            }}
+                            style={{ fontFamily: '"Raleway", sans-serif' }}
+                          >
+                            {feature.title}
+                          </Typography>
+                          <Typography 
+                            variant="body1" 
+                            color="text.secondary"
+                            sx={{ 
+                              lineHeight: 1.5,
+                              mb: 2
+                            }}
+                            style={{ fontFamily: '"Raleway", sans-serif' }}
+                          >
+                            {feature.description}
+                          </Typography>
+                          <Button
+                            variant="outlined"
+                            size="medium"
+                            onClick={() => navigate(feature.path)}
+                            sx={{ 
+                              color: feature.color, 
+                              borderColor: feature.color,
+                              borderRadius: 2,
+                              px: 3,
+                              py: 0.5,
+                              fontWeight: 500,
+                              transition: 'all 0.3s ease',
+                              '&:hover': {
+                                borderColor: feature.color,
+                                bgcolor: `${feature.color}10`,
+                                transform: 'translateY(-1px)'
+                              }
+                            }}
+                            style={{ fontFamily: '"Raleway", sans-serif' }}
+                          >
+                            {feature.buttonText}
+                          </Button>
+                        </Box>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
             </Box>
           </Box>
 
-          {/* Features Content */}
-          <Box sx={{ flex: 1 }}>
-            <Typography
-              variant="h2"
-              component="h2"
-              gutterBottom
+          <Box 
+            sx={{ 
+              textAlign: 'center', 
+              py: 8, 
+              mt: 8, 
+              borderTop: `1px solid ${theme.palette.divider}`,
+              position: 'relative',
+              zIndex: 2
+            }}
+          >
+            <Typography 
+              variant="h5" 
               sx={{ 
                 color: 'text.primary', 
                 mb: 2,
-                fontWeight: 700,
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontWeight: 600
               }}
               style={{ fontFamily: '"Raleway", sans-serif' }}
             >
-              Your Kitchen, Smarter
+              Join thousands reducing food waste daily.
             </Typography>
-
-            <Box
+            <Button 
+              variant="contained" 
+              onClick={handleQuickStart} 
+              size={isMobile ? 'medium' : 'large'}
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 3,
+                px: 5,
+                py: 1.5,
+                borderRadius: 2,
+                fontSize: '1rem',
+                fontWeight: 600,
+                boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 8px 25px rgba(0,0,0,0.15)'
+                }
               }}
+              style={{ fontFamily: '"Raleway", sans-serif' }}
             >
-              {features.map((feature, index) => (
-                <Card 
-                  key={index}
-                  sx={{ 
-                    bgcolor: 'background.default',
-                    borderRadius: 3,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                    border: `1px solid ${theme.palette.divider}`,
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  
-                    '&:hover': {
-                      transform: 'translateY(-4px)',
-                      boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-                    }
-                  }}
-                >
-                  <CardContent sx={{ py: 3, px: 3 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                      <Box
-                        sx={{
-                          display: 'inline-flex',
-                          p: 2,
-                          borderRadius: 3,
-                          bgcolor: `${feature.color}15`,
-                          color: feature.color,
-                          transition: 'all 0.3s ease'
-                        }}
-                      >
-                        {feature.icon}
-                      </Box>
-                      <Box sx={{ flex: 1 }}>
-                        <Typography 
-                          gutterBottom 
-                          variant="h5" 
-                          component="h3" 
-                          sx={{ 
-                            color: 'text.primary',
-                            fontWeight: 600,
-                            mb: 1
-                          }}
-                          style={{ fontFamily: '"Raleway", sans-serif' }}
-                        >
-                          {feature.title}
-                        </Typography>
-                        <Typography 
-                          variant="body1" 
-                          color="text.secondary"
-                          sx={{ 
-                            lineHeight: 1.5,
-                            mb: 2
-                          }}
-                          style={{ fontFamily: '"Raleway", sans-serif' }}
-                        >
-                          {feature.description}
-                        </Typography>
-                        <Button
-                          variant="outlined"
-                          size="medium"
-                          onClick={() => navigate(feature.path)}
-                          sx={{ 
-                            color: feature.color, 
-                            borderColor: feature.color,
-                            borderRadius: 2,
-                            px: 3,
-                            py: 0.5,
-                            fontWeight: 500,
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                              borderColor: feature.color,
-                              bgcolor: `${feature.color}10`,
-                              transform: 'translateY(-1px)'
-                            }
-                          }}
-                          style={{ fontFamily: '"Raleway", sans-serif' }}
-                        >
-                            {feature.buttonText}
-                        </Button>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
+              Start Free Trial
+            </Button>
           </Box>
-        </Box>
-
-        <Box 
-          sx={{ 
-            textAlign: 'center', 
-            py: 8, 
-            mt: 8, 
-            borderTop: `1px solid ${theme.palette.divider}`,
-          }}
-        >
-          <Typography 
-            variant="h5" 
-            sx={{ 
-              color: 'text.primary', 
-              mb: 2,
-              fontWeight: 600
-            }}
-            style={{ fontFamily: '"Raleway", sans-serif' }}
-          >
-            Join thousands reducing food waste daily.
-          </Typography>
-          <Button 
-            variant="contained" 
-            onClick={handleQuickStart} 
-            size={isMobile ? 'medium' : 'large'}
-            sx={{
-              px: 5,
-              py: 1.5,
-              borderRadius: 2,
-              fontSize: '1rem',
-              fontWeight: 600,
-              boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 25px rgba(0,0,0,0.15)'
-              }
-            }}
-            style={{ fontFamily: '"Raleway", sans-serif' }}
-          >
-            Start Free Trial
-          </Button>
-        </Box>
-      </Container>
+        </Container>
+      </Box>
     </>
   );
 };
