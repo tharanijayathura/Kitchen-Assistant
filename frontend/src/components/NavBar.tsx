@@ -17,6 +17,7 @@ const NavBar = () => {
     { name: 'Inventory', path: '/inventory' },
     { name: 'Recipes', path: '/recipes' },
     { name: 'Meal Plan', path: '/meal-plan' },
+
   ];
 
   const drawer = (
